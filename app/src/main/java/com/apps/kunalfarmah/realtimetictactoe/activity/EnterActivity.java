@@ -1,12 +1,9 @@
 package com.apps.kunalfarmah.realtimetictactoe.activity;
 
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.StrictMode;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +20,7 @@ import android.widget.Toast;
 
 import com.apps.kunalfarmah.realtimetictactoe.fragments.InterstitialFragment;
 import com.apps.kunalfarmah.realtimetictactoe.fragments.HowToPlayFragment;
+import com.apps.kunalfarmah.realtimetictactoe.util.Utils;
 import com.example.kunalfarmah.realtimetictactoe.R;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
@@ -31,7 +29,6 @@ import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException;
 import com.google.firebase.auth.FirebaseUser;
 
 
-import java.net.InetAddress;
 import java.util.Arrays;
 import java.util.List;
 
@@ -41,6 +38,7 @@ public class EnterActivity extends AppCompatActivity {
     Button offline;
     Button online;
     ImageView info;
+    Activity self;
 
     private boolean isLoginFlowActive = false;
     Menu menu;
@@ -143,7 +141,7 @@ public class EnterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        self = this;
         setContentView(R.layout.activity_enter);
 
         setSupportActionBar((androidx.appcompat.widget.Toolbar) findViewById(R.id.my_toolbar));
@@ -162,7 +160,7 @@ public class EnterActivity extends AppCompatActivity {
         online.setOnClickListener(v -> {
 
 
-            if (hasActiveInternetConnection(getApplicationContext())) {
+            if (Utils.hasActiveInternetConnection(self)) {
 
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -285,42 +283,7 @@ public class EnterActivity extends AppCompatActivity {
     }
 
 
-    // checks if it is connceted to a network
-    public boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null;
-    }
 
-    // this checks if connection has internet access
-
-    public boolean hasActiveInternetConnection(Context context) {
-        if (isNetworkAvailable()) {
-
-            try {
-                // forcefully using network on main thread
-                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-
-                StrictMode.setThreadPolicy(policy);
-            }
-            catch (Exception e){
-                e.printStackTrace();
-            }
-
-            try {
-                InetAddress ipAddr = InetAddress.getByName("google.com");
-                //You can replace it with your name
-                return !ipAddr.equals("");
-
-            } catch (Exception e) {
-                return false;
-            }
-        } else {
-            //Log.d(LOG_TAG, "No network available!");
-        }
-        return false;
-    }
 
 
     @Override
