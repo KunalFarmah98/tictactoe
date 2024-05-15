@@ -7,10 +7,13 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.StrictMode;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.MenuCompat;
+
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -24,11 +27,11 @@ import com.example.kunalfarmah.realtimetictactoe.R;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
+
+import java.net.InetAddress;
 import java.util.Arrays;
 import java.util.List;
 
@@ -38,6 +41,8 @@ public class EnterActivity extends AppCompatActivity {
     Button offline;
     Button online;
     ImageView info;
+
+    private boolean isLoginFlowActive = false;
     Menu menu;
     // a variable to check if we are inside teh host or join screen
     public FrameLayout fragments;
@@ -47,29 +52,72 @@ public class EnterActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
+        MenuCompat.setGroupDividerEnabled(menu, true);
         if(FirebaseAuth.getInstance().getCurrentUser() == null){
-            menu.removeItem(R.id.signout);
+            MenuCompat.setGroupDividerEnabled(menu, false);
+            menu.removeGroup(R.id.account_group);
         }
         return true;
+    }
+
+    private void removeFragments(){
+        // removing all fragments after sign in
+        for (int i = 0; i < getSupportFragmentManager().getBackStackEntryCount(); i++) {
+            getSupportFragmentManager().popBackStack();
+        }
+
+        // if a fragment was open during sign out, remove it
+        if (fragments.getVisibility() == View.VISIBLE)
+            fragments.setVisibility(View.GONE);
+
+        invalidateOptionsMenu();
+    }
+
+    private void signout(){
+        AuthUI.getInstance().signOut(this);
+        FirebaseAuth.getInstance().signOut();
+        removeFragments();
+        invalidateOptionsMenu();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.signout:
-                AuthUI.getInstance().signOut(this);
-                FirebaseAuth.getInstance().signOut();
+                signout();
                 Toast.makeText(getApplicationContext(), "Signed Out Successfully!!", Toast.LENGTH_SHORT).show();
+                return true;
 
-                // removing all fragments after sign in
-                for (int i = 0; i < getSupportFragmentManager().getBackStackEntryCount(); i++) {
-                    getSupportFragmentManager().popBackStack();
-                }
 
-                // if a fragemnt was open during sign out, remove it
-                if (fragments.getVisibility() == View.VISIBLE)
-                    fragments.setVisibility(View.GONE);
+            case R.id.delete_account:
 
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Delete Account")
+                        .setMessage("Are you sure you want to delete your account?\nYou will not be able to recover it and all your data would be deleted.")
+                        .setPositiveButton("Yes", (dialog, which) -> {
+                            AuthUI.getInstance().delete(this).addOnSuccessListener(
+                                    aVoid -> {
+                                        FirebaseAuth.getInstance().signOut();
+                                        Toast.makeText(getApplicationContext(), "Account Deleted Successfully!!", Toast.LENGTH_SHORT).show();
+                                        removeFragments();
+                                        invalidateOptionsMenu();
+                                    }
+                            )
+                                    .addOnFailureListener(
+                                            e -> {
+                                                if(e instanceof FirebaseAuthRecentLoginRequiredException) {
+                                                    Toast.makeText(getApplicationContext(), "Account Verification Required. Please sign In again", Toast.LENGTH_SHORT).show();
+                                                    signout();
+                                                    online.callOnClick();
+                                                }
+                                                else
+                                                    Toast.makeText(getApplicationContext(), "Failed to delete account", Toast.LENGTH_SHORT).show();
+                                            }
+                                    );
+                        }
+                        )
+                        .setNegativeButton("No", (dialog, which) -> dialog.dismiss());
+                builder.show();
                 return true;
 
             case R.id.about_dev:
@@ -116,11 +164,6 @@ public class EnterActivity extends AppCompatActivity {
 
             if (hasActiveInternetConnection(getApplicationContext())) {
 
-                InterstitialFragment interstitial = new InterstitialFragment();
-                fragments.setVisibility(View.VISIBLE);
-
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_containter, interstitial).addToBackStack("Interstitial").commit();
-
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
                 // if user is logged in continue
@@ -130,13 +173,16 @@ public class EnterActivity extends AppCompatActivity {
                         User = "New User";
                     }
                     Toast.makeText(getApplicationContext(), "Welcome " + User + " :)", Toast.LENGTH_SHORT).show();
+                    InterstitialFragment interstitial = new InterstitialFragment();
+                    fragments.setVisibility(View.VISIBLE);
+
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_containter, interstitial).addToBackStack("Interstitial").commit();
 
                 } else {
-
+                    isLoginFlowActive = true;
                     // Choose authentication providers if user is not logged in
                     List<AuthUI.IdpConfig> providers = Arrays.asList(
                             new AuthUI.IdpConfig.EmailBuilder().build(),
-                            new AuthUI.IdpConfig.PhoneBuilder().build(),
                             new AuthUI.IdpConfig.GoogleBuilder().build());
 
 // Create and launch sign-in intent
@@ -169,6 +215,10 @@ public class EnterActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        if(isLoginFlowActive){
+            isLoginFlowActive = false;
+            return;
+        }
         super.onBackPressed();
         // removing the fragment if back is pressed on the host or join screen
         if (getSupportFragmentManager().getBackStackEntryCount() == 0)
@@ -196,13 +246,18 @@ public class EnterActivity extends AppCompatActivity {
 
                 if (user != null) {
                     Toast.makeText(getApplicationContext(), "Signed In Successfully as " +User, Toast.LENGTH_SHORT).show();
+                    invalidateOptionsMenu();
+                    InterstitialFragment interstitial = new InterstitialFragment();
+                    fragments.setVisibility(View.VISIBLE);
+
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_containter, interstitial).addToBackStack("Interstitial").commit();
+                    isLoginFlowActive = false;
                 } else {
                     Toast.makeText(getApplicationContext(), "Please Sign In", Toast.LENGTH_SHORT).show();
-
+                    isLoginFlowActive = true;
                     // Choose authentication providers
                     List<AuthUI.IdpConfig> providers = Arrays.asList(
                             new AuthUI.IdpConfig.EmailBuilder().build(),
-                            new AuthUI.IdpConfig.PhoneBuilder().build(),
                             new AuthUI.IdpConfig.GoogleBuilder().build());
 
 // Create and launch sign-in intent
@@ -254,14 +309,12 @@ public class EnterActivity extends AppCompatActivity {
             }
 
             try {
-                HttpURLConnection urlc = (HttpURLConnection) (new URL("http://www.google.com").openConnection());
-                urlc.setRequestProperty("User-Agent", "Test");
-                urlc.setRequestProperty("Connection", "close");
-                urlc.setConnectTimeout(1500);
-                urlc.connect();
-                return (urlc.getResponseCode() == 200);
-            } catch (IOException e) {
-                e.printStackTrace();
+                InetAddress ipAddr = InetAddress.getByName("google.com");
+                //You can replace it with your name
+                return !ipAddr.equals("");
+
+            } catch (Exception e) {
+                return false;
             }
         } else {
             //Log.d(LOG_TAG, "No network available!");

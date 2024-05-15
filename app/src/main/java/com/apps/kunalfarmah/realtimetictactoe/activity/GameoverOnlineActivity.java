@@ -135,8 +135,7 @@ public class GameoverOnlineActivity extends AppCompatActivity {
                         Boolean closed = dataSnapshot.getValue(Boolean.class);
 
                         if (closed) {
-                            startActivity(new Intent(GameoverOnlineActivity.this,EnterActivity.class));
-                            finishAffinity();
+                            finish();
                         }
                     } catch (Exception e) {
                     }
