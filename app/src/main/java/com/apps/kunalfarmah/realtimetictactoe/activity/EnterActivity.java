@@ -46,8 +46,10 @@ public class EnterActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
+        if(FirebaseAuth.getInstance().getCurrentUser() == null){
+            menu.removeItem(R.id.signout);
+        }
         return true;
     }
 
@@ -102,77 +104,65 @@ public class EnterActivity extends AppCompatActivity {
         online = findViewById(R.id.online);
         info = findViewById(R.id.how_to_play);
         fragments = findViewById(R.id.fragment_containter);
-        //fragment1 = findViewById(R.id.how_to_play);
-
-        //mFirebaseAuth = FirebaseAuth.getInstance();
 
 
-        offline.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), StartActivity.class);
-                startActivity(intent);
-            }
+        offline.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), StartActivity.class);
+            startActivity(intent);
         });
 
-        online.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        online.setOnClickListener(v -> {
 
 
-                if (hasActiveInternetConnection(getApplicationContext())) {
+            if (hasActiveInternetConnection(getApplicationContext())) {
 
-                    InterstitialFragment interstitial = new InterstitialFragment();
-                    fragments.setVisibility(View.VISIBLE);
+                InterstitialFragment interstitial = new InterstitialFragment();
+                fragments.setVisibility(View.VISIBLE);
 
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_containter, interstitial).addToBackStack("Interstitial").commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_containter, interstitial).addToBackStack("Interstitial").commit();
 
-                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-                    // if user is logged in continue
-                    if (user != null) {
-                        User = user.getDisplayName();
-                        if(User=="null"){
-                            User = "New User";
-                        }
-                        Toast.makeText(getApplicationContext(), "Welcome " + User + " :)", Toast.LENGTH_SHORT).show();
+                // if user is logged in continue
+                if (user != null) {
+                    User = user.getDisplayName();
+                    if(User=="null"){
+                        User = "New User";
+                    }
+                    Toast.makeText(getApplicationContext(), "Welcome " + User + " :)", Toast.LENGTH_SHORT).show();
 
-                    } else {
+                } else {
 
-                        // Choose authentication providers if user is not logged in
-                        List<AuthUI.IdpConfig> providers = Arrays.asList(
-                                new AuthUI.IdpConfig.EmailBuilder().build(),
-                                new AuthUI.IdpConfig.PhoneBuilder().build(),
-                                new AuthUI.IdpConfig.GoogleBuilder().build());
+                    // Choose authentication providers if user is not logged in
+                    List<AuthUI.IdpConfig> providers = Arrays.asList(
+                            new AuthUI.IdpConfig.EmailBuilder().build(),
+                            new AuthUI.IdpConfig.PhoneBuilder().build(),
+                            new AuthUI.IdpConfig.GoogleBuilder().build());
 
 // Create and launch sign-in intent
-                        startActivityForResult(
-                                AuthUI.getInstance()
-                                        .createSignInIntentBuilder()
-                                        .setAvailableProviders(providers)
-                                        .setLogo(R.drawable.logo)
-                                        .setIsSmartLockEnabled(false)
-                                        .setTheme(R.style.AppTheme)
-                                        .build(),
-                                RC_SIGN_IN);
+                    startActivityForResult(
+                            AuthUI.getInstance()
+                                    .createSignInIntentBuilder()
+                                    .setAvailableProviders(providers)
+                                    .setLogo(R.drawable.logo)
+                                    .setIsSmartLockEnabled(false)
+                                    .setTheme(R.style.AppTheme)
+                                    .build(),
+                            RC_SIGN_IN);
 
 
-                    }
-                } else {
-                    Toast.makeText(getApplicationContext(), "Please connect your device to the internet to continue :)", Toast.LENGTH_SHORT).show();
                 }
+            } else {
+                Toast.makeText(getApplicationContext(), "Please connect your device to the internet to continue :)", Toast.LENGTH_SHORT).show();
             }
         });
 
 
-        info.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        info.setOnClickListener(v -> {
 
-                HowToPlayFragment play = new HowToPlayFragment();
-                fragments.setVisibility(View.VISIBLE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_containter, play).addToBackStack("info").commit();
-            }
+            HowToPlayFragment play = new HowToPlayFragment();
+            fragments.setVisibility(View.VISIBLE);
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_containter, play).addToBackStack("info").commit();
         });
     }
 
@@ -181,15 +171,8 @@ public class EnterActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         // removing the fragment if back is pressed on the host or join screen
-
-        // fragment1.setVisibility(View.GONE);
-
         if (getSupportFragmentManager().getBackStackEntryCount() == 0)
             fragments.setVisibility(View.GONE);
-        else {
-        }
-        //fragments.setVisibility(View.VISIBLE);
-
     }
 
     @Override
