@@ -54,8 +54,8 @@ public class OnlineActivity extends AppCompatActivity implements View.OnClickLis
     Timer t;
 
 
-    static int minutes, seconds;
-    static int timeval;
+    int minutes, seconds;
+    int timeval;
 
     TextView min, sec;
 

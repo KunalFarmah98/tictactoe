@@ -71,9 +71,9 @@ public class GameoverOnlineActivity extends AppCompatActivity {
 
 
         try {
-            final String ishost = getIntent().getSerializableExtra("isHost").toString();
+            String ishost = getIntent().getSerializableExtra("isHost").toString();
 
-            final String timeval = getIntent().getStringExtra("Time");
+            String timeval = getIntent().getStringExtra("Time");
 
             time.setText("Time : " + timeval);
 
