@@ -39,6 +39,8 @@ public class OnlineActivity extends AppCompatActivity implements View.OnClickLis
     ImageView i7;
     ImageView i8;
     ImageView i9;
+    
+    OnlineActivity self;
 
     TextView player1;
     TextView player2;
@@ -101,7 +103,9 @@ public class OnlineActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        timepref = getApplicationContext().getSharedPreferences("timeval", MODE_PRIVATE);
+        self = this;
+        
+        timepref = getSharedPreferences("timeval", MODE_PRIVATE);
         medit = timepref.edit();
 
         isover = false;
@@ -214,13 +218,12 @@ public class OnlineActivity extends AppCompatActivity implements View.OnClickLis
 
                 if (crash == true) {
 
-//                    if(!isover) {
                     t.cancel();
                     t.purge();
                     isover = true;
-
-                    Toast.makeText(getApplicationContext(), "A User left the server :( Please restart the game to play again", Toast.LENGTH_SHORT).show();
-//                    }
+                    startActivity(new Intent(self,EnterActivity.class));
+                    finish();
+                    Toast.makeText(self, "A User left the server :( Please restart the game to play again", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -265,7 +268,7 @@ public class OnlineActivity extends AppCompatActivity implements View.OnClickLis
         // code to run a timer in game
 
 
-        t.scheduleAtFixedRate(new TimerTask() {
+        t.schedule(new TimerTask() {
 
             @Override
             public void run() {
@@ -288,7 +291,7 @@ public class OnlineActivity extends AppCompatActivity implements View.OnClickLis
                         if (timeval == 0) {
                             isover = true;
 
-                            Toast.makeText(getApplicationContext(), "Drawn!!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(self, "Drawn!!", Toast.LENGTH_LONG).show();
                             t.cancel();
                             t.purge();
 //                            finish();
@@ -298,7 +301,7 @@ public class OnlineActivity extends AppCompatActivity implements View.OnClickLis
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Intent gameover = new Intent(getApplicationContext(), GameoverOnlineActivity.class);
+                                    Intent gameover = new Intent(self, GameoverOnlineActivity.class);
                                     gameover.putExtra("isHost", ishost);
                                     gameover.putExtra("Time", min.getText() + " : " + seconds);
                                     gameover.putExtra("Crash", false);
@@ -727,12 +730,12 @@ public class OnlineActivity extends AppCompatActivity implements View.OnClickLis
                         t.purge();
                         isover = true;
 
-                        Toast.makeText(getApplicationContext(), hostname + " Wins", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(self, hostname + " Wins", Toast.LENGTH_SHORT).show();
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
 
-                                Intent gameover = new Intent(getApplicationContext(), GameoverOnlineActivity.class);
+                                Intent gameover = new Intent(self, GameoverOnlineActivity.class);
                                 gameover.putExtra("isHost", ishost);
                                 gameover.putExtra("Time", min.getText() + " : " + ((c < 10) ? ("0" + c) : c));
                                 gameover.putExtra("Crash", false);
@@ -750,11 +753,11 @@ public class OnlineActivity extends AppCompatActivity implements View.OnClickLis
                         t.purge();
                         isover = true;
 
-                        Toast.makeText(getApplicationContext(), awayname + " Wins", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(self, awayname + " Wins", Toast.LENGTH_SHORT).show();
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                Intent gameover = new Intent(getApplicationContext(), GameoverOnlineActivity.class);
+                                Intent gameover = new Intent(self, GameoverOnlineActivity.class);
                                 gameover.putExtra("isHost", ishost);
                                 gameover.putExtra("Time", min.getText() + " : " + ((c < 10) ? ("0" + c) : c));
                                 gameover.putExtra("Crash", false);
@@ -771,11 +774,11 @@ public class OnlineActivity extends AppCompatActivity implements View.OnClickLis
                         t.purge();
                         isover = true;
 
-                        Toast.makeText(getApplicationContext(), "Drawn!!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(self, "Drawn!!", Toast.LENGTH_LONG).show();
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                Intent gameover = new Intent(getApplicationContext(), GameoverOnlineActivity.class);
+                                Intent gameover = new Intent(self, GameoverOnlineActivity.class);
                                 gameover.putExtra("isHost", ishost);
                                 gameover.putExtra("Time", min.getText() + " : " + ((c < 10) ? ("0" + c) : c));
                                 gameover.putExtra("Crash", false);
@@ -1102,30 +1105,24 @@ public class OnlineActivity extends AppCompatActivity implements View.OnClickLis
 
         if (moves[0][0] != -1 && moves[0][0] == moves[0][1] && moves[0][1] == moves[0][2]) {
             if (moves[0][0] == 0) {
-                // Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_SHORT).show();
                 return true;
             } else if (moves[0][0] == 1) {
-                //  Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
             }
         }
 
         if (moves[1][0] != -1 && moves[1][0] == moves[1][1] && moves[1][1] == moves[1][2]) {
             if (moves[1][0] == 0) {
-                //  Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
             } else if (moves[1][0] == 1) {
-                //   Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
             }
         }
 
         if (moves[2][0] != -1 && moves[2][0] == moves[2][1] && moves[2][1] == moves[2][2]) {
             if (moves[2][0] == 0) {
-                //   Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
             } else if (moves[2][0] == 1) {
-                //   Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
             }
         }
@@ -1134,10 +1131,8 @@ public class OnlineActivity extends AppCompatActivity implements View.OnClickLis
 
         if (moves[0][0] != -1 && moves[0][0] == moves[1][0] && moves[1][0] == moves[2][0]) {
             if (moves[0][0] == 0) {
-                // Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
             } else if (moves[0][0] == 1) {
-                //  Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
             }
         }
@@ -1145,20 +1140,16 @@ public class OnlineActivity extends AppCompatActivity implements View.OnClickLis
 
         if (moves[0][1] != -1 && moves[0][1] == moves[1][1] && moves[1][1] == moves[2][1]) {
             if (moves[0][1] == 0) {
-                // Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
             } else if (moves[0][1] == 1) {
-                //  Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
             }
         }
 
         if (moves[0][2] != -1 && moves[0][2] == moves[1][2] && moves[1][2] == moves[2][2]) {
             if (moves[0][2] == 0) {
-                // Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
             } else if (moves[0][2] == 1) {
-                //  Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
             }
         }
@@ -1167,10 +1158,8 @@ public class OnlineActivity extends AppCompatActivity implements View.OnClickLis
 
         if (moves[0][0] != -1 && moves[0][0] == moves[1][1] && moves[1][1] == moves[2][2]) {
             if (moves[0][0] == 0) {
-                //  Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
             } else if (moves[0][0] == 1) {
-                //  Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
             }
         }
@@ -1178,32 +1167,13 @@ public class OnlineActivity extends AppCompatActivity implements View.OnClickLis
         // checks secondary diagonal
 
         if (moves[0][2] != -1 && moves[0][2] == moves[1][1] && moves[1][1] == moves[2][0]) {
-            //   Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
             if (moves[0][2] == 0) {
-                //   Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
             } else return moves[0][2] == 1;
         }
 
         return false;
     }
-
-
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//
-//        try {
-//            t.cancel();
-//            t.purge();
-//
-//            if (!isover)
-//                crash.setValue(true);
-//        }
-//        catch (Exception e){
-//            e.printStackTrace();
-//        }
-//    }
 
     @Override
     protected void onStop() {
@@ -1224,7 +1194,6 @@ public class OnlineActivity extends AppCompatActivity implements View.OnClickLis
 
             setDefaults();
         } catch (Exception E) {
-            E.printStackTrace();
         }
 
 
@@ -1236,10 +1205,7 @@ public class OnlineActivity extends AppCompatActivity implements View.OnClickLis
         try {
             t.cancel();
             t.purge();
-            if (!isover)
-                crash.setValue(true);
         } catch (Exception E) {
-            E.printStackTrace();
         }
         setDefaults();
     }
@@ -1283,11 +1249,11 @@ public class OnlineActivity extends AppCompatActivity implements View.OnClickLis
                 crash.setValue(true);
 
             mdata.goOnline();
-            throw new Exception("hey");
+            startActivity(new Intent(this,EnterActivity.class));
+            finish();
 
         } catch (Exception e) {
-            finishAffinity();
-            e.printStackTrace();
+            Toast.makeText(this,"Something went wrong", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -65,10 +65,6 @@ public class GameoverOnlineActivity extends AppCompatActivity {
 
                 restartref.setValue(false);
                 closeref.setValue(true);
-/*
-                // this function will close the app
-                ActivityCompat.finishAffinity(gameover_online.this);
-                System.exit(0)*/
             }
         });
 
@@ -132,6 +128,7 @@ public class GameoverOnlineActivity extends AppCompatActivity {
                         Boolean closed = dataSnapshot.getValue(Boolean.class);
 
                         if (closed) {
+                            startActivity(new Intent(getApplicationContext(),EnterActivity.class));
                             finish();
                         }
                     } catch (Exception e) {
@@ -175,7 +172,7 @@ public class GameoverOnlineActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        close.callOnClick();
+       close.performClick();
     }
 }
 

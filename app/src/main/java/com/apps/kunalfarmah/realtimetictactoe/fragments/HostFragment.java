@@ -167,7 +167,6 @@ public class HostFragment extends Fragment {
 
 
                                 } catch (Exception e) {
-                                    e.printStackTrace();
                                 }
                             }
 
@@ -186,7 +185,6 @@ public class HostFragment extends Fragment {
                 }
 
                 catch (Exception e){
-                    e.printStackTrace();
                 }
             }
         });

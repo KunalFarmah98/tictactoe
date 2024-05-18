@@ -29,7 +29,6 @@ public class Utils {
                 StrictMode.setThreadPolicy(policy);
             }
             catch (Exception e){
-                e.printStackTrace();
             }
 
             try {

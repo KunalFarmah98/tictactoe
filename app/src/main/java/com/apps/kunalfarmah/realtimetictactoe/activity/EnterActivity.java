@@ -239,7 +239,6 @@ public class EnterActivity extends AppCompatActivity {
                         User = "New User";
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
                 }
 
                 if (user != null) {

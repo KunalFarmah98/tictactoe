@@ -43,18 +43,14 @@ public class InterstitialFragment extends Fragment {
         host.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                JoinFragment join = new JoinFragment();
                 HostFragment host = new HostFragment();
-               act.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_containter,host).commit();
+                act.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_containter,host).commit();
             }
         });
 
         join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 JoinFragment join = new JoinFragment();
                 act.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_containter,join).commit();
             }
