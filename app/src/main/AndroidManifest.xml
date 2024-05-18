@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.kunalfarmah.realtimetictactoe">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -16,8 +15,9 @@
 
         <activity
             android:name="com.apps.kunalfarmah.realtimetictactoe.activity.EnterActivity"
+            android:exported="true"
             android:screenOrientation="portrait"
-            android:launchMode="singleInstance">
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,20 +27,20 @@
         <activity
             android:name="com.apps.kunalfarmah.realtimetictactoe.activity.StartActivity"
             android:screenOrientation="portrait"
-            android:launchMode="singleInstance"/>
+            android:launchMode="singleTask"/>
         <activity
             android:name="com.apps.kunalfarmah.realtimetictactoe.activity.MainActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name="com.apps.kunalfarmah.realtimetictactoe.activity.GameoverActivity"
             android:screenOrientation="portrait"
-            android:launchMode="singleInstance" />
+            android:launchMode="singleTask" />
 
         <activity android:name="com.apps.kunalfarmah.realtimetictactoe.activity.OnlineActivity"
             android:screenOrientation="portrait" />
         <activity android:name="com.apps.kunalfarmah.realtimetictactoe.activity.GameoverOnlineActivity"
             android:screenOrientation="portrait"
-            android:launchMode="singleInstance" />
+            android:launchMode="singleTask" />
 
     </application>
 

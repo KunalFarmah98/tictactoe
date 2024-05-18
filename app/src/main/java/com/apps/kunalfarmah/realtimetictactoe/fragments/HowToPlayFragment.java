@@ -2,6 +2,8 @@ package com.apps.kunalfarmah.realtimetictactoe.fragments;
 
 
 import android.os.Bundle;
+
+import androidx.annotation.Keep;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +17,7 @@ import com.example.kunalfarmah.realtimetictactoe.R;
  */
 public class HowToPlayFragment extends Fragment {
 
-
+    @Keep
     public HowToPlayFragment() {
         // Required empty public constructor
     }

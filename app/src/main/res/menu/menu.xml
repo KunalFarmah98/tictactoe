@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <group android:id="@+id/group_main">
+        <item
+            android:id="@+id/about_dev"
+            android:title="About Developer" />
+        <item
+            android:id="@+id/privacy"
+            android:title="Privacy Policy" />
+    </group>
 
-    <item android:id="@+id/signout"
-          android:title="Sign Out"
-          />
-    <item android:id="@+id/about_dev"
-          android:title="About Developer"
+    <group android:id="@+id/account_group">
+        <item
+            android:id="@+id/signout"
+            android:title="Sign Out" />
+        <item
+            android:id="@+id/delete_account"
+            android:title="Delete Account"
+            android:titleTextColor="@android:color/holo_red_dark" />
         />
-    <item android:id="@+id/privacy"
-        android:title="Privacy Policy"
-        />
+    </group>
 
 </menu>

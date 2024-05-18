@@ -49,8 +49,7 @@ public class GameoverActivity extends AppCompatActivity {
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // this function will close the app
-                ActivityCompat.finishAffinity(GameoverActivity.this);
+                finish();
             }
         });
 

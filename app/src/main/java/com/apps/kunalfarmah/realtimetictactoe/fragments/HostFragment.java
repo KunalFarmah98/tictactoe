@@ -1,13 +1,17 @@
 package com.apps.kunalfarmah.realtimetictactoe.fragments;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.annotation.Keep;
 import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -49,6 +53,7 @@ public class HostFragment extends Fragment {
 
     RadioButton d1, d2, d3;
 
+    @Keep
     public HostFragment() {
         // Required empty public constructor
     }
@@ -112,6 +117,11 @@ public class HostFragment extends Fragment {
                     }
 
                     diffRef.setValue(difficulty);
+                    View view = getActivity().getCurrentFocus();
+                    if (view != null) {
+                        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    }
 
                     // storing the token in the db
 
@@ -119,10 +129,14 @@ public class HostFragment extends Fragment {
                         hidden3.setVisibility(View.VISIBLE);
                     } else {
                         Log.d("token", token.getText().toString());
-                        mref.setValue(token.getText().toString());
-                        hidden3.setVisibility(View.GONE);
-                        hidden1.setVisibility(View.VISIBLE);
-                        hidden2.setVisibility(View.VISIBLE);
+                        mref.setValue(token.getText().toString()).addOnSuccessListener(
+                                aVoid -> {
+                                    hidden3.setVisibility(View.GONE);
+                                    hidden1.setVisibility(View.VISIBLE);
+                                    hidden2.setVisibility(View.VISIBLE);
+                                }
+                        );
+
 
                         //  waiting for game to start
 
@@ -156,7 +170,6 @@ public class HostFragment extends Fragment {
 
 
                                 } catch (Exception e) {
-                                    e.printStackTrace();
                                 }
                             }
 
@@ -175,7 +188,6 @@ public class HostFragment extends Fragment {
                 }
 
                 catch (Exception e){
-                    e.printStackTrace();
                 }
             }
         });

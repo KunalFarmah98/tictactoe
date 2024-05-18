@@ -1,7 +1,10 @@
 package com.apps.kunalfarmah.realtimetictactoe.model;
 
+import androidx.annotation.Keep;
+
 public class ImagesBox {
 
+    @Keep
     public ImagesBox(){
 
     }
