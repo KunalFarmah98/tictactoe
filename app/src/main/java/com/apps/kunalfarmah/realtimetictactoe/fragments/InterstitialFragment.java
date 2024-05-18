@@ -3,6 +3,8 @@ package com.apps.kunalfarmah.realtimetictactoe.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
+
+import androidx.annotation.Keep;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +24,7 @@ public class InterstitialFragment extends Fragment {
     Button join;
     EnterActivity act;
 
-
+    @Keep
     public InterstitialFragment() {
         // Required empty public constructor
     }

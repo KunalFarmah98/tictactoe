@@ -274,6 +274,7 @@ public class EnterActivity extends AppCompatActivity {
                 // sign-in flow using the back button. Otherwise check
                 // response.getError().getErrorCode() and handle the error.
                 // ...
+                Toast.makeText(this,"An error occurred while siging in.",Toast.LENGTH_SHORT).show();
                 onBackPressed();
 
 

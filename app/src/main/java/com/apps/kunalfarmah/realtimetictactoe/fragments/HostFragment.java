@@ -4,6 +4,8 @@ package com.apps.kunalfarmah.realtimetictactoe.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.annotation.Keep;
 import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -51,6 +53,7 @@ public class HostFragment extends Fragment {
 
     RadioButton d1, d2, d3;
 
+    @Keep
     public HostFragment() {
         // Required empty public constructor
     }

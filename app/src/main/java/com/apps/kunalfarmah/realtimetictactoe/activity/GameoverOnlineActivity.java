@@ -90,19 +90,13 @@ public class GameoverOnlineActivity extends AppCompatActivity {
 
                     try {
                         Boolean restarted = dataSnapshot.getValue(Boolean.class);
-
-
                         if (restarted) {
-
                             if (Utils.hasActiveInternetConnection(self)) {
                                 Intent start = new Intent(getApplicationContext(), OnlineActivity.class);
                                 start.putExtra("isHost", ishost);
                                 start.putExtra("difficulty", difficulty);
                                 start.putExtra("token",token);
                                 startActivity(start);
-//                                finish();
-                                //finish();
-                                // restartref.setValue(false);
                             } else {
                                 Toast.makeText(getApplicationContext(), "Please check your Internet Connection", Toast.LENGTH_SHORT).show();
                             }

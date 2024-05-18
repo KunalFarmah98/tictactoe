@@ -268,7 +268,7 @@ public class OnlineActivity extends AppCompatActivity implements View.OnClickLis
         // code to run a timer in game
 
 
-        t.schedule(new TimerTask() {
+        t.scheduleAtFixedRate(new TimerTask() {
 
             @Override
             public void run() {
