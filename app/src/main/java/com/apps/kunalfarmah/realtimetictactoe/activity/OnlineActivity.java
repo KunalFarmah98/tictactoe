@@ -303,7 +303,7 @@ public class OnlineActivity extends AppCompatActivity implements View.OnClickLis
                                 public void run() {
                                     Intent gameover = new Intent(self, GameoverOnlineActivity.class);
                                     gameover.putExtra("isHost", ishost);
-                                    gameover.putExtra("Time", min.getText() + " : " + seconds);
+                                    gameover.putExtra("Time", minutes + " : " + seconds);
                                     gameover.putExtra("Crash", false);
                                     gameover.putExtra("difficulty", difficulty);
                                     gameover.putExtra("token",token);
@@ -725,6 +725,9 @@ public class OnlineActivity extends AppCompatActivity implements View.OnClickLis
                     awayname = awayName.substring(0, i2 - 1);
 
                     String winner = dataSnapshot.getValue(String.class);
+                    String minutesT = String.valueOf(minutes - Integer.parseInt(min.getText().toString()));
+                    int secs = seconds - Integer.parseInt(sec.getText().toString());
+                    String secondsT = String.valueOf(secs<10?"0"+secs:secs);
                     if (winner.equalsIgnoreCase("Host")) {
                         t.cancel();
                         t.purge();
@@ -737,7 +740,7 @@ public class OnlineActivity extends AppCompatActivity implements View.OnClickLis
 
                                 Intent gameover = new Intent(self, GameoverOnlineActivity.class);
                                 gameover.putExtra("isHost", ishost);
-                                gameover.putExtra("Time", min.getText() + " : " + ((c < 10) ? ("0" + c) : c));
+                                gameover.putExtra("Time", minutesT + " : " + secondsT);
                                 gameover.putExtra("Crash", false);
                                 gameover.putExtra("difficulty", difficulty);
                                 gameover.putExtra("token",token);
@@ -759,7 +762,7 @@ public class OnlineActivity extends AppCompatActivity implements View.OnClickLis
                             public void run() {
                                 Intent gameover = new Intent(self, GameoverOnlineActivity.class);
                                 gameover.putExtra("isHost", ishost);
-                                gameover.putExtra("Time", min.getText() + " : " + ((c < 10) ? ("0" + c) : c));
+                                gameover.putExtra("Time", minutesT + " : " + secondsT);
                                 gameover.putExtra("Crash", false);
                                 gameover.putExtra("difficulty", difficulty);
                                 gameover.putExtra("token",token);
@@ -780,7 +783,7 @@ public class OnlineActivity extends AppCompatActivity implements View.OnClickLis
                             public void run() {
                                 Intent gameover = new Intent(self, GameoverOnlineActivity.class);
                                 gameover.putExtra("isHost", ishost);
-                                gameover.putExtra("Time", min.getText() + " : " + ((c < 10) ? ("0" + c) : c));
+                                gameover.putExtra("Time", minutesT + " : " + secondsT);
                                 gameover.putExtra("Crash", false);
                                 gameover.putExtra("difficulty", difficulty);
                                 gameover.putExtra("token",token);
