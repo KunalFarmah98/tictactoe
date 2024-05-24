@@ -23,6 +23,22 @@
           }
         },
         {
+          "client_id": "726859166683-6mn44ia5is30dpccjec6cfpsukn630le.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.apps.kunalfarmah.realtimetictactoe",
+            "certificate_hash": "e50d78d30a43b0004984ba1e83b4983a78cb2000"
+          }
+        },
+        {
+          "client_id": "726859166683-q3uuls7ftlmk3klrjhfhh3cp976l0611.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.apps.kunalfarmah.realtimetictactoe",
+            "certificate_hash": "48dfbe5b51d0f447ea06a66f88be0408cbac35c1"
+          }
+        },
+        {
           "client_id": "726859166683-vvb415d2vcs6hf75krbrksdd0s25k051.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
