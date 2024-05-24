@@ -165,7 +165,7 @@ public class OnlineActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 awayName = dataSnapshot.getValue(String.class);
-                player2.setText((awayName == "null" || awayName == null) ? "Away" : awayName + " : X");
+                player2.setText((awayName == "null" || awayName == null) ? "Away" : awayName + " : O");
                 Log.d("Away", awayName);
             }
 
