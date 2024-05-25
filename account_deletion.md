@@ -4,6 +4,7 @@
 ## Account Deletion Steps
 ### To safeguard the privacy of our users, the app provides a simple way for users to delete their account.
 ### Please Note: If you had created account using phone number, your account has automatically been deleted while disabling phone number login in the app and all the account data has been wiped. You can continue using other login methods to create a new account and delete it whenever you want to delete it.
+### User can request to delete their account from within the app.
 ### Please follow the below steps to delete your account:
 1. Download or open the app using this link [Realtime TicTacToe](https://play.google.com/store/apps/details?id=com.apps.kunalfarmah.realtimetictactoe)
 2. Log in using the login method you used while creating account.
