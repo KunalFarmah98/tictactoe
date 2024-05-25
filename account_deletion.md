@@ -11,4 +11,10 @@
 4. Select Delete Account.
 5. You would be asked for a confirmation, when ready, tap on yes.
 6. Your account and all data will be immediately deleted.
+<p>
+  <img src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/account_deletion_1.png" alt="delete account" width="250" height= "500"/>
+  <img src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/account_deletion_2.png" alt="confirmtaion" width="250" height= "500"/>
+  <img src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/account_deletion_3.png" alt="account deleted" width="250" height= "500"/>
+</p>
+
 #### Please Note: If you are already logged in or haven't re authentiacted for a long time, the app may ask you to log in again in order to verify your credentials. Following that you can follow steps 3 and 4 to delete your account. 
