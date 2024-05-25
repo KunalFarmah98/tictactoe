@@ -1,4 +1,4 @@
-# Realtime Tic Tac Toe
+# Realtime TicTacToe
 ![alt text](https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/logo.png)
 
 ## Account Deletion Steps
