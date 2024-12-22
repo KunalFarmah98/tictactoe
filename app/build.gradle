@@ -1,19 +1,16 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'com.google.gms.google-services'
-apply plugin: 'com.google.firebase.firebase-perf'
-apply plugin: 'com.google.firebase.crashlytics'
 
 
 
 android {
     compileSdk 34
     defaultConfig {
-        applicationId "com.apps.kunalfarmah.realtimetictactoe"
+        applicationId "com.kunalfarmah.covid_19_info_dashboard"
         minSdk 21
         targetSdk 34
-        versionCode 14
-        versionName "2.2.1"
+        versionCode 11
+        versionName "1.2.0"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
     buildTypes {
@@ -22,7 +19,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    namespace 'com.example.kunalfarmah.realtimetictactoe'
+    namespace 'com.kunalfarmah.covid_19_info_dashboard'
     lint {
         abortOnError false
         checkReleaseBuilds false
@@ -38,18 +35,11 @@ dependencies {
     implementation 'com.google.android.material:material:1.12.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'com.google.firebase:firebase-core:21.1.1'
     testImplementation 'junit:junit:4.12'
-    implementation 'com.google.firebase:firebase-database:21.0.0'
-    implementation 'com.firebaseui:firebase-ui-auth:8.0.2'
-    implementation 'com.firebaseui:firebase-ui-database:7.1.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
     implementation 'com.intuit.sdp:sdp-android:1.0.5'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.google.firebase:firebase-perf:21.0.0'
-    implementation 'com.google.firebase:firebase-crashlytics:19.0.0'
-    implementation 'com.google.firebase:firebase-analytics:22.0.0'
 }
 
 repositories {

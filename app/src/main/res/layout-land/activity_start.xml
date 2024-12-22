@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+
+    android:layout_height="match_parent"
+    tools:context="com.apps.kunalfarmah.covid_19_info_dashboard.activity.StartActivity"
+    tools:ignore="MissingDefaultResource">
+
+    <TextView
+        android:id="@+id/head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp"
+        android:background="@color/colorPrimaryDark"
+        android:paddingLeft="8dp"
+        android:paddingTop="8dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="8dp"
+        android:text="TIC TAC TOE"
+        android:textColor="#f8f8ff"
+        android:textSize="50dp" />
+
+    <LinearLayout
+        android:id="@+id/names"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_below="@id/head"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/player1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:hint="Player 1 Name"
+            android:maxLength="10"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="30sp" />
+
+        <EditText
+            android:id="@+id/player2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_25sdp"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:hint="Player 2 Name"
+            android:maxLength="10"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="30sp" />
+
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/gobutton"
+        android:layout_below="@id/names"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/baseline_play_circle_outline_black_36dp"
+        app:tint="@color/colorPrimary" />
+
+
+</RelativeLayout>
